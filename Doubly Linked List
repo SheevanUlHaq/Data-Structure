@@ -1,0 +1,229 @@
+/*
+Author @SHEEVAN UL HAQ
+Course B.Sc.(Hons) Computer Science
+*/
+
+#include <iostream>
+using namespace std;
+
+template <class T>
+class DLL
+{
+    class node
+    {
+    public:
+        T data;
+        node *next;
+        node *prev;
+        // node()
+        // {
+        //     temp->next = NULL;
+        //     temp->prev = NULL;
+        // }
+        // ~node()
+        // {
+        //     while (head != NULL)
+        //     {
+        //         temp = head->next;
+        //         delete head;
+        //         head = temp;
+        //     }
+        // }
+    };
+
+public:
+    node *head = NULL, *tail = NULL, *temp, *temp2;
+    T d;
+    int pos, count = 1;
+    void add_to_head();
+    void add_to_tail();
+    void add_in_btw();
+
+    void delete_tail();
+    void delete_head();
+    void delete_in_btw();
+
+    void length();
+    void reverse();
+    void concatenate();
+    void search();
+    void display();
+};
+
+template <class T>
+void DLL<T>::add_to_head()
+{
+    temp = new node();
+    cout << "Enter the data you want to insert : ";
+    cin >> d;
+    temp->data = d;
+    if (head == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+}
+
+template <class T>
+void DLL<T>::add_to_tail()
+{
+    temp = new node();
+    cout << "Enter the data you want to insert : ";
+    cin >> d;
+    temp->data = d;
+    if (head == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+}
+
+template <class T>
+void DLL<T>::add_in_btw()
+{
+    temp = new node();
+    cout << "Enter the position of node you want to insert : ";
+    cin >> pos;
+    cout << "Enter the data you want to insert : ";
+    cin >> d;
+    temp->data = d;
+
+    if (head == NULL)
+    {
+        head = tail = temp;
+    }
+    else
+    {
+        temp2 = head;
+        while (count != pos - 1)
+        {
+            temp = temp->next;
+            count++;
+        }
+        temp->next = temp2->next;
+        temp2->next->prev = temp;
+        temp2->next = temp;
+        temp->prev = temp2;
+    }
+}
+
+template <class T>
+void DLL<T>::delete_head()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empt.";
+    }
+    else
+    {
+        temp = head->next;
+        delete head;
+        temp->prev = NULL;
+        head = temp;
+    }
+}
+
+template <class T>
+void DLL<T>::delete_tail()
+{
+    temp = tail->prev;
+    delete tail;
+    temp->next = NULL;
+    tail = temp;
+}
+
+template <class T>
+void DLL<T>::delete_in_btw()
+{
+    cout << "Enter the position of node you want to delete : ";
+    cin >> pos;
+    temp = head;
+    while (count != pos - 1)
+    {
+        temp = temp->next;
+    }
+    temp2 = temp->next;
+    temp->next = temp2->next;
+    temp2->next->prev = temp;
+    delete temp2;
+}
+
+template <class T>
+void DLL<T>::length()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empty." << endl;
+    }
+    else
+    {
+        temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+            count++;
+        }
+        cout << "Length of Linked list is : " << count << endl;
+    }
+}
+
+template <class T>
+void DLL<T>::search()
+{
+    cout << "Enter the data you want to search : ";
+    cin >> d;
+    temp = head;
+    while (temp->data != d && temp->next != NULL)
+    {
+        temp = temp->next;
+        count++;
+    }
+    if (temp->data == d)
+    {
+        cout << "Your node is at " << count << " position." << endl;
+    }
+    else
+    {
+        cout << "Your data is not present in Linked list." << endl;
+    }
+}
+
+template <class T>
+void DLL<T>::reverse()
+{
+}
+
+template <class T>
+void DLL<T>::display()
+{
+    temp = head;
+    while (temp->next != NULL)
+    {
+        cout << temp->data << "->";
+        temp = temp->next;
+    }
+    cout << tail->data;
+    cout << endl;
+}
+
+int main()
+{
+    DLL<int> ob;
+    ob.add_to_head();
+    ob.add_to_tail();
+    ob.add_in_btw();
+    ob.display();
+    ob.length();
+    ob.search();
+    return 0;
+}
