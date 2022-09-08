@@ -1,0 +1,483 @@
+/*
+Author @SHEEVAN UL HAQ
+Course B.Sc.(Hons) Computer Science
+*/
+
+#include <iostream>
+using namespace std;
+
+template <class T>
+class SLL
+{
+    class node
+    {
+    public:
+        T data;
+        node *next;
+    };
+
+public:
+    node *first = NULL, *last = NULL, *temp, *temp1;
+    void add_to_tail();
+    void add_to_head();
+    void add_in_btw();
+
+    void delte_tail();
+    void delete_head();
+    void delete_in_btw();
+
+    void reverse();
+    void concatenate();
+    void search();
+    void display();
+};
+
+template <class T>
+void SLL<T>::add_to_tail()
+{
+    temp = new node;
+    cout << "Enter the data you want to enter : ";
+    T d;
+    cin >> d;
+    temp->data = d;
+    temp->next = NULL;
+
+    if (first == NULL)
+    {
+        first = last = temp;
+    }
+    else
+    {
+        last->next = temp;
+        last = temp;
+    }
+}
+
+template <class T>
+void SLL<T>::add_to_head()
+{
+    temp = new node;
+    cout << "Enter the data you want to enter : ";
+    T d;
+    cin >> d;
+    temp->data = d;
+    temp->next = NULL;
+
+    if (first == NULL)
+    {
+        first = last = temp;
+    }
+    else
+    {
+        temp->next = first;
+        first = temp;
+    }
+}
+
+template <class T>
+void SLL<T>::add_in_btw()
+{
+    temp = new node;
+    T d;
+    int pos, count = 1;
+
+    cout << "Enter the position of node to insert : ";
+    cin >> pos;
+    cout << "Enter the data you want to enter : ";
+    cin >> d;
+    temp->data = d;
+    temp->next = NULL;
+
+    if (first == NULL)
+    {
+        first = last = temp;
+    }
+
+    temp1 = first;
+    while (count != pos - 1)
+    {
+        temp1 = temp1->next;
+        count++;
+    }
+
+    temp->next = temp1->next;
+    temp1->next = temp;
+}
+
+template <class T>
+void SLL<T>::delte_tail()
+{
+    if (first == NULL)
+    {
+        cout << "Linked list is empty.";
+    }
+    else if (first == last)
+    {
+        delete first;
+        last = NULL;
+    }
+    else
+    {
+        temp = first;
+        while (temp->next != last)
+        {
+            temp = temp->next;
+        }
+        delete last;
+        temp->next = NULL;
+        last = temp;
+    }
+}
+
+template <class T>
+void SLL<T>::delete_head()
+{
+    if (first == NULL)
+    {
+        cout << "Linked list is empty.";
+    }
+    else if (first == last)
+    {
+        delete first;
+        last = NULL;
+    }
+    else
+    {
+        temp = first;
+        delete first;
+        first = temp->next;
+    }
+}
+
+template <class T>
+void SLL<T>::delete_in_btw()
+{
+    cout << "Enter the position of node to delete : ";
+    int pos;
+    cin >> pos;
+    int count = 1;
+    temp = first;
+    while (count != pos - 1)
+    {
+        temp = temp->next;
+        count++;
+    }
+    // temp1 = temp->next;
+    // temp->next = temp->next->next;
+    // delete temp1;
+    temp1 = temp->next;
+    temp->next = temp1->next;
+    delete temp1;
+}
+
+template <class T>
+void SLL<T>::reverse()
+{
+    if (first == NULL)
+    {
+        cout << "Linked list is empty.";
+    }
+    else
+    {
+        node *cur = first, *prev = NULL;
+        temp = cur->next;
+        while (cur != NULL)
+        {
+            cur->next = prev;
+            prev = cur;
+            cur = temp;
+            temp = temp->next;
+        }
+    }
+}
+
+template <class T>
+void SLL<T>::display()
+{
+    temp = first;
+    if (first == NULL)
+    {
+        cout << "Linked list is empty.";
+    }
+    while (temp->next != last)
+    {
+        cout << temp->data << "->";
+        temp = temp->next;
+    }
+    cout << temp->data << "->" << last->data;
+    cout << endl;
+}
+
+int main()
+{
+    cout << "\n1. Int"
+         << "\n2. Float"
+         << "\n3. Double"
+         << "\n4. Char";
+    cout << "\nEnter the number for which data type you want to acess linked list :- ";
+    int data_type;
+    cin >> data_type;
+
+    if (data_type == 1)
+    {
+        int choice;
+        char ch = 'y' || 'Y';
+        SLL<int> ob;
+        do
+        {
+            cout << "************** SINGLY LINKED LIST ***************\n"
+                 << "\n1. Add a node to head."
+                 << "\n2. Add a node to tail."
+                 << "\n3. Add a node in between."
+                 << "\n4. Delete a head node."
+                 << "\n5. Delete a tail node."
+                 << "\n6. Delete a node in between."
+                 << "\n7. Reverse a linked list."
+                 << "\n8. Concatenate two linked list. "
+                 << "\n9. To sarch an element."
+                 << "\n10. Display linked list."
+                 << "\n11. To exit.";
+
+            cout << "\n\nEnter your choice : ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                ob.add_to_head();
+                break;
+            case 2:
+                ob.add_to_tail();
+                break;
+            case 3:
+                ob.add_in_btw();
+                break;
+            case 4:
+                ob.delete_head();
+                break;
+            case 5:
+                ob.delte_tail();
+                break;
+            case 6:
+                ob.delete_in_btw();
+                break;
+            case 7:
+                ob.reverse();
+            case 8:
+            case 9:
+            case 10:
+                ob.display();
+                break;
+            case 11:
+                exit(0);
+            default:
+                cout << "You entered a wrong choice !";
+                break;
+            }
+
+            cout << "\nDo you want to continue(Y/N) : ";
+            cin >> ch;
+            cout << endl
+                 << endl;
+
+        } while (ch == 'y' || ch == 'Y');
+    }
+    else if (data_type == 2)
+    {
+        int choice;
+        char ch = 'y' || 'Y';
+        SLL<float> ob;
+        do
+        {
+            cout << "************** SINGLY LINKED LIST ***************\n"
+                 << "\n1. Add a node to head."
+                 << "\n2. Add a node to tail."
+                 << "\n3. Add a node in between."
+                 << "\n4. Delete a head node."
+                 << "\n5. Delete a tail node."
+                 << "\n6. Delete a node in between."
+                 << "\n7. Reverse a linked list."
+                 << "\n8. Concatenate two linked list. "
+                 << "\n9. To sarch an element."
+                 << "\n10. Display linked list."
+                 << "\n11. To exit.";
+
+            cout << "\n\nEnter your choice : ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                ob.add_to_head();
+                break;
+            case 2:
+                ob.add_to_tail();
+                break;
+            case 3:
+                ob.add_in_btw();
+                break;
+            case 4:
+                ob.delete_head();
+                break;
+            case 5:
+                ob.delte_tail();
+                break;
+            case 6:
+                ob.delete_in_btw();
+                break;
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                ob.display();
+                break;
+            case 11:
+                exit(0);
+            default:
+                cout << "You entered a wrong choice !";
+                break;
+            }
+
+            cout << "\nDo you want to continue(Y/N) : ";
+            cin >> ch;
+            cout << endl
+                 << endl;
+
+        } while (ch == 'y' || ch == 'Y');
+    }
+
+    else if (data_type == 3)
+    {
+        int choice;
+        char ch = 'y' || 'Y';
+        SLL<double> ob;
+        do
+        {
+            cout << "************** SINGLY LINKED LIST ***************\n"
+                 << "\n1. Add a node to head."
+                 << "\n2. Add a node to tail."
+                 << "\n3. Add a node in between."
+                 << "\n4. Delete a head node."
+                 << "\n5. Delete a tail node."
+                 << "\n6. Delete a node in between."
+                 << "\n7. Reverse a linked list."
+                 << "\n8. Concatenate two linked list. "
+                 << "\n9. To sarch an element."
+                 << "\n10. Display linked list."
+                 << "\n11. To exit.";
+
+            cout << "\n\nEnter your choice : ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                ob.add_to_head();
+                break;
+            case 2:
+                ob.add_to_tail();
+                break;
+            case 3:
+                ob.add_in_btw();
+                break;
+            case 4:
+                ob.delete_head();
+                break;
+            case 5:
+                ob.delte_tail();
+                break;
+            case 6:
+                ob.delete_in_btw();
+                break;
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                ob.display();
+                break;
+            case 11:
+                exit(0);
+            default:
+                cout << "You entered a wrong choice !";
+                break;
+            }
+
+            cout << "\nDo you want to continue(Y/N) : ";
+            cin >> ch;
+            cout << endl
+                 << endl;
+
+        } while (ch == 'y' || ch == 'Y');
+    }
+
+    else if (data_type == 4)
+    {
+        int choice;
+        char ch = 'y' || 'Y';
+        SLL<char> ob;
+        do
+        {
+            cout << "************** SINGLY LINKED LIST ***************\n"
+                 << "\n1. Add a node to head."
+                 << "\n2. Add a node to tail."
+                 << "\n3. Add a node in between."
+                 << "\n4. Delete a head node."
+                 << "\n5. Delete a tail node."
+                 << "\n6. Delete a node in between."
+                 << "\n7. Reverse a linked list."
+                 << "\n8. Concatenate two linked list. "
+                 << "\n9. To sarch an element."
+                 << "\n10. Display linked list."
+                 << "\n11. To exit.";
+
+            cout << "\n\nEnter your choice : ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                ob.add_to_head();
+                break;
+            case 2:
+                ob.add_to_tail();
+                break;
+            case 3:
+                ob.add_in_btw();
+                break;
+            case 4:
+                ob.delete_head();
+                break;
+            case 5:
+                ob.delte_tail();
+                break;
+            case 6:
+                ob.delete_in_btw();
+                break;
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                ob.display();
+                break;
+            case 11:
+                exit(0);
+            default:
+                cout << "You entered a wrong choice !";
+                break;
+            }
+
+            cout << "\nDo you want to continue(Y/N) : ";
+            cin >> ch;
+            cout << endl
+                 << endl;
+
+        } while (ch == 'y' || ch == 'Y');
+    }
+
+    else
+    {
+        cout << "You entered a wrong choice." << endl;
+    }
+
+    return 0;
+}
