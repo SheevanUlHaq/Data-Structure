@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+
+class CSLL{
+    class node{
+        public:
+        int data;
+        node *next;
+
+        node(){
+            cout<<"Enter the data you want to enter : ";
+            cin>>data;
+            next=NULL;
+        }
+        ~node(){
+
+        }
+    };
+    public:
+    node *head=NULL,*temp,*temp2;
+
+    void add_node();
+    void delete_node();
+
+    void reverse();
+    void concatenate();
+    void search();
+    void display();
+};
+
+int pos,count=1;
+
+void CSLL::add_node()
+{
+    temp=new node();
+    if(head==NULL){
+        head=temp;
+        head->next=head;
+    }
+    else{
+        cout<<"Enter the position of node where you want to insert : ";
+        cin>>pos;
+        temp2=head;
+        while(count!=pos-1){
+            temp2=temp2->next;
+        }
+        temp->next=temp2->next;
+        temp2->next=temp;
+    }
+}
+
+void CSLL:: delete_node(){
+    if(head==NULL){
+        cout<<"Linked list is empty.";
+    }
+    else{
+        cout<<"Enter the position of node you want to delete : ";
+        cin>>pos;
+        temp=head;
+        while(count!=pos-1){
+            temp=temp->next;
+            count++;
+        }
+        temp2=temp->next;
+        temp->next=temp2->next;
+        delete temp2;
+    }
+
+}
+
+void CSLL::display(){
+    if(head==NULL)
+    {
+        cout<<"Linked list is empty .";
+    }
+    else{
+        temp=head;
+        while(temp->next!=head){
+            cout<<temp->data<<"->";
+            temp=temp->next;
+        }
+        cout<<temp->data<<"->.....";
+
+    }
+}
+
+int main(){
+    CSLL ob;
+    ob.add_node(); 
+    ob.add_node();
+    ob.add_node();
+    ob.delete_node();
+    ob.display();
+}
