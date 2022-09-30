@@ -1,0 +1,97 @@
+#include<iostream>
+
+using namespace std;
+
+class Stack{
+    int top=-1,size;
+    int a[];
+    public:
+    Stack(){
+        cout<<"Enter the size: ";
+        cin>>size;
+        a[size];
+    }
+    void push();
+    int pop();
+    void display();
+    bool isEmpty();
+    void topElement();
+};
+
+bool Stack:: isEmpty(){
+    if(top==-1){
+        cout<<"Stack is empty...";
+        return true;
+    }
+    else{
+        cout<<"Stack is not empty..";
+        return false;
+    }
+}
+
+void Stack::push(){
+    if(top==size-1){
+        cout<<"Stack overflow...";
+        return;
+    }
+    // cout<<"Enter the element you want to push: ";
+    top++;
+    cin>>a[top];
+}
+
+int Stack :: pop(){
+    if(top==-1){
+        cout<<"Stack undeflow...";
+    }
+    return a[top--];
+}
+
+void Stack::display(){
+    if(top==-1){
+        cout<<"Stack unerflow...";
+    }
+    int temp=top;
+    while(temp!=-1){
+        cout<<a[temp--]<<" ";
+    }
+    cout<<endl;
+}
+
+void Stack::topElement(){
+    cout<<a[top]<<endl;
+}
+
+int main(){
+
+    Stack s;
+    int choice;
+    do{
+    cout<<"\n1.isEmpty()()\n2.push()\n3.pop()\n4.display()\n5.topElement()\n6.exit()\n"<<endl;
+    cout<<"Enter your choice: ";
+    cin>>choice;
+    switch(choice){
+        case 1:
+        s.isEmpty();
+        break;
+        case 2:
+        s.push();
+        break;
+        case 3:
+        cout<<s.pop();
+        break;
+        case 4:
+        s.display();
+        break;
+        case 5:
+        s.topElement();
+        break;
+        case 6:
+        exit(0);
+        default:
+        cout<<"Invalid choice !"<<endl;
+        cout<<"Enter again."<<endl;
+    }
+    }
+    while(choice!=5);
+    return 0;
+}
