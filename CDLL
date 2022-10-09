@@ -1,0 +1,197 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next, *prev;
+    node()
+    {
+        cout << "Enter the data you want to enter : ";
+        cin >> data;
+        prev = next = NULL;
+    }
+};
+
+class CDLL
+{
+public:
+    int pos;
+    node *head = NULL, *temp, *temp2;
+    void insert_node();
+    void delete_node();
+    void display();
+    void search();
+    void reverse();
+    void concatenante();
+};
+
+void CDLL::insert_node()
+{
+    if (head == NULL)
+    {
+        temp = new node();
+        head = temp;
+        head->prev = head;
+        head->next = head;
+        return;
+    }
+    temp = new node();
+    cout << "Enter the position you want to insert the node: ";
+    cin >> pos;
+    temp2 = head;
+    for (int i = 2; i < pos; i++)
+    {
+        temp2 = temp2->next;
+    }
+    temp->prev = temp2;
+    temp->next = temp2->next;
+    temp2->next->prev = temp;
+    temp2->next = temp;
+}
+
+void CDLL::delete_node()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empty..." << endl;
+        return;
+    }
+    cout << "Enter the position of node you want to delete: ";
+    cin >> pos;
+    if (pos == 1)
+    {
+        head = NULL;
+        delete head;
+        return;
+    }
+    temp = head;
+    for (int i = 2; i < pos; i++)
+    {
+        temp = temp->next;
+    }
+    temp2 = temp->next;
+    temp->next = temp2->next;
+    temp2->next->prev = temp;
+    delete temp2;
+}
+
+void CDLL ::display()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empty..." << endl;
+        return;
+    }
+    temp = head;
+    while (temp->next != head)
+    {
+        cout << temp->data << "->";
+        temp = temp->next;
+    }
+    cout << temp->data << "....." << endl;
+    return;
+}
+
+void CDLL::search()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empty...<<endl";
+        return;
+    }
+    cout << "Enter the data you want to search : ";
+    int el, count = 1;
+    cin >> el;
+    if (head->data == el)
+    {
+        cout << "Your node is at position 1 from head." << endl;
+        return;
+    }
+    temp = head;
+    while (temp->next != head)
+    {
+        if (temp->data == el)
+        {
+            cout << "Your node is at position " << count << " from head." << endl;
+            return;
+        }
+        temp = temp->next;
+        count++;
+    }
+    if (head->prev->data == el)
+    {
+        cout << "Your node is at position " << count << " from head." << endl;
+    }
+}
+
+void CDLL::reverse()
+{
+    if (head == NULL)
+    {
+        cout << "Linked list is empty..." << endl;
+        return;
+    }
+    temp = head->prev;
+    while (temp != head)
+    {
+        cout << temp->data << "->";
+        temp = temp->prev;
+    }
+    cout << temp->data << "....." << endl;
+    return;
+}
+
+void CDLL::concatenante()
+{
+}
+
+int main()
+{
+    CDLL a;
+    int choice;
+    cout << "\n\t******************CIRCULAR DOUBLY LINKED LIST*************\n";
+    do
+    {
+        cout
+            << endl
+            << "1. Insert a node\n"
+            << "2. Delete a node\n"
+            << "3. Search a node\n"
+            << "4. Cocatenate\n"
+            << "5. Display\n"
+            << "6. Reverse\n"
+            << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            a.insert_node();
+            break;
+        case 2:
+            a.delete_node();
+            break;
+        case 3:
+            a.search();
+            break;
+        case 4:
+            a.concatenante();
+            break;
+        case 5:
+            a.display();
+            break;
+        case 6:
+            a.reverse();
+            break;
+        case 7:
+            cout << "\nProgram terminated !\n";
+            cout << "Thanks for using." << endl;
+            break;
+        default:
+            cout << "Invalid choice !\nTry again.";
+        }
+    } while (choice != 7);
+    return 0;
+}
