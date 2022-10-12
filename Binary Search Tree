@@ -1,0 +1,290 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *left, *right;
+
+    node()
+    {
+        data = 0;
+        left = right = NULL;
+    }
+    node(int val)
+    {
+        data = val;
+        left = right = NULL;
+    }
+    ~node()
+    {
+        cout << "Current node is detroyed" << endl;
+    }
+};
+
+class BST
+{
+    node *root = NULL, *temp, *parent, *cur;
+
+public:
+    void insert_node(node *root, int el);
+
+    void delete_node(node *temp, int el);
+    void delete_0(node *parent, node *cur, int el);
+    void delete_1(node *parent, node *cur, int el);
+    void delete_2(node *parent, node *cur, int el);
+
+    bool search(node *root, int key);
+
+    void inorder_iterative(node *root);
+    void preorder_iterative(node *root);
+    void postorder_iterative(node *root);
+
+    void inorder_recursive(node *root);
+    void preorder_recursive(node *root);
+    void postorder_recursive(node *root);
+};
+
+void BST::insert_node(node *root, int el)
+{
+    if (root == NULL)
+    {
+        root = new node(el);
+        return;
+    }
+    cur = root;
+    while (cur != NULL)
+    {
+        if (el < cur->data)
+        {
+            temp = cur;
+            cur = cur->left;
+        }
+        else if (el > cur->data)
+        {
+            temp = cur;
+            cur = cur->right;
+        }
+    }
+    if (el < temp->data)
+    {
+        temp->left = new node(el);
+    }
+    else if (el >= temp->data)
+    {
+        temp->right = new node(el);
+    }
+}
+
+void BST::delete_0(node *parent, node *cur, int el)
+{
+    if (el < parent->data)
+        parent->left = NULL;
+    else
+        parent->right = NULL;
+    delete cur;
+}
+
+void BST::delete_1(node *parent, node *cur, int el)
+{
+    if (el < parent->data)
+    {
+        if (cur->left == NULL)
+        {
+            parent->left = cur->right;
+            delete cur;
+        }
+        else
+        {
+            parent->left = cur->left;
+            delete cur;
+        }
+    }
+    else
+    {
+        if (cur->left == NULL)
+        {
+            parent->right = cur->right;
+            delete cur;
+        }
+        else
+        {
+            parent->right = cur->left;
+            delete cur;
+        }
+    }
+}
+
+void BST::delete_2(node *parent, node *cur, int el){
+    temp=cur->right;
+    while(temp!=NULL){
+        parent=temp;
+        temp=temp->left;
+    }
+    cur->data=parent->data;
+    if(parent->right==NULL){
+        
+    }
+
+
+}
+
+void BST::delete_node(node *root, int el)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is empty.";
+        return;
+    }
+    cur = root;
+    while (el != cur->data)
+    {
+        if (el < cur->data)
+        {
+            parent = cur;
+            cur = cur->left;
+        }
+        else
+        {
+            parent = cur;
+            cur = cur->right;
+        }
+    }
+
+    /*Case 1: When node has no cild.*/
+    if (cur->left == NULL && cur->right == NULL)
+    {
+        if (el < parent->data)
+            parent->left = NULL;
+        else
+            parent->right = NULL;
+        delete cur;
+    }
+
+    /*Case 2: When node has one child.*/
+    else if (cur->left == NULL || cur->right == NULL)
+    {
+        if (el < parent->data)
+        {
+            if (cur->left == NULL)
+            {
+                parent->left = cur->right;
+                delete cur;
+            }
+            else
+            {
+                parent->left = cur->left;
+                delete cur;
+            }
+        }
+        else
+        {
+            if (cur->left == NULL)
+            {
+                parent->right = cur->right;
+                delete cur;
+            }
+            else
+            {
+                parent->right = cur->left;
+                delete cur;
+            }
+        }
+    }
+
+    /*Case 3: When child has two child.*/
+    else
+    {
+    }
+}
+
+bool BST::search(node *root, int key)
+{
+    if (root == NULL)
+        return false;
+    temp = root;
+    while (temp->data != key || temp != NULL)
+    {
+        if (key < temp->data)
+        {
+            temp = temp->left;
+        }
+        else
+        {
+            temp = temp->right;
+        }
+    }
+    if (temp->data == key)
+        return true;
+    else
+        return false;
+}
+
+void BST::inorder_recursive(node *root)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is empty." << endl;
+        return;
+    }
+    if (root != NULL)
+    {
+        inorder_recursive(root->left);
+        cout << root->data << " ";
+        inorder_recursive(root->right);
+    }
+    cout << endl;
+}
+
+void BST::preorder_recursive(node *root)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is empty." << endl;
+        return;
+    }
+    temp = root;
+    if (temp != NULL)
+    {
+        cout << temp->data << " ";
+        preorder_recursive(temp->left);
+        preorder_recursive(temp->right);
+    }
+    cout << endl;
+}
+
+void BST::postorder_recursive(node *root)
+{
+    if (root == NULL)
+    {
+        cout << "Tree is empty." << endl;
+        return;
+    }
+    temp = root;
+    if (temp != NULL)
+    {
+        postorder_recursive(temp->left);
+        postorder_recursive(temp->right);
+        cout << temp->data << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    BST a;
+    node *root;
+    root->data = 50;
+    root->left->right = NULL;
+
+    a.insert_node(root, 40);
+    a.insert_node(root, 100);
+    a.insert_node(root, 8);
+    a.insert_node(root, 20);
+    a.insert_node(root, 60);
+
+    a.inorder_recursive(root);
+
+    return 0;
+}
